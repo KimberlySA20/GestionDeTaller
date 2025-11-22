@@ -145,8 +145,7 @@ export function FormularioAdmision({
         return;
       }
 
-      const baseUrl =
-        "https://xtpqhsbosazgpwmiifjt.supabase.co/functions/v1/make-server-89b561df";
+      const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
       // Crear admisión
       const admisionResponse = await fetch(

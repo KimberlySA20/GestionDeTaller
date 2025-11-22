@@ -12,8 +12,8 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import { Empleado } from "../types/empleado";
 import { toast } from "sonner";
 
-const API_URL = "https://xtpqhsbosazgpwmiifjt.supabase.co/functions/v1/make-server-89b561df";
-const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cHFoc2Jvc2F6Z3B3bWlpZmp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE1MTcxNTAsImV4cCI6MjA0NzA5MzE1MH0.L_5AHLw_Xyra1VPGur0PJV06dEZ1c_zp7PTCn2kkAh0";
+const API_URL = import.meta.env.VITE_API_BASE_URL;
+const ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export function PaginaEmpleados() {
   const [empleados, setEmpleados] = useState<Empleado[]>([]);
@@ -34,7 +34,7 @@ export function PaginaEmpleados() {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch(`${API_URL}/server/empleados`, {
+      const response = await fetch(`${API_URL}/empleados`, {
         headers: {
           Authorization: `Bearer ${ANON_KEY}`,
         },
@@ -59,8 +59,8 @@ export function PaginaEmpleados() {
   const guardarEmpleado = async (empleadoData: Partial<Empleado>) => {
     try {
       const url = empleadoEditando
-        ? `${API_URL}/server/empleados/${empleadoEditando.id}`
-        : `${API_URL}/server/empleados`;
+        ? `${API_URL}/empleados/${empleadoEditando.id}`
+        : `${API_URL}/empleados`;
 
       const method = empleadoEditando ? "PUT" : "POST";
 
@@ -111,7 +111,7 @@ export function PaginaEmpleados() {
   ) => {
     try {
       const response = await fetch(
-        `${API_URL}/server/empleados/${empleado.id}/estado`,
+        `${API_URL}/empleados/${empleado.id}/estado`,
         {
           method: "PUT",
           headers: {

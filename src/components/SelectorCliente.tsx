@@ -75,8 +75,7 @@ export function SelectorCliente({
     notas: "",
   });
 
-  const baseUrl =
-    "https://xtpqhsbosazgpwmiifjt.supabase.co/functions/v1/make-server-89b561df";
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     if (modo === "buscar") {
@@ -182,8 +181,8 @@ export function SelectorCliente({
       <CardContent>
         <Tabs
           value={modo}
-          onValueChange={(value) =>
-            setModo(value as "buscar" | "crear")
+          onValueChange={(value : "buscar" | "crear") =>
+            setModo(value)
           }
         >
           <TabsList className="grid w-full grid-cols-2">

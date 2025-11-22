@@ -1,0 +1,146 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencias
+/node_modules
+/.pnp
+.pnp.*
+
+# Testing
+/coverage
+
+# Producción
+/build
+/dist
+
+# Variables de entorno
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Archivos de entorno de Vite
+.env.*.local
+
+# Editor directories and files
+.idea
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de caché
+.cache/
+.temp/
+.temp*
+
+# Archivos de configuración local
+*.local
+
+# Archivos de configuración de IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Archivos de depuración
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de entorno
+.env
+.env.local
+
+# Archivos de caché de Vite
+node_modules/.vite/
+node_modules/.cache/
+
+# Archivos de configuración de TypeScript
+*.tsbuildinfo
+
+# Archivos de configuración de ESLint y Prettier
+.eslintcache
+.prettiercache
+
+# Archivos de configuración de Husky
+.husky/
+
+# Archivos de configuración de Jest
+/coverage
+
+# Archivos de configuración de Cypress
+/cypress/videos/
+/cypress/screenshots/
+
+# Archivos de configuración de Playwright
+/playwright-report/
+/test-results/
+
+# Archivos de configuración de Vercel
+.vercel
+
+# Archivos de configuración de Netlify
+.netlify
+
+# Archivos de configuración de Supabase
+.supabase/
+
+# Archivos de configuración de Docker
+Dockerfile
+.dockerignore
+
+# Archivos de configuración de Kubernetes
+k8s/
+
+# Archivos de configuración de Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# Archivos de configuración de VSCode
+.vscode/*
+!.vscode/extensions.json
+.vscode/settings.json
+
+# Archivos de configuración de Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Archivos de configuración de macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk

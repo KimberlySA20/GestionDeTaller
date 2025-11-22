@@ -64,7 +64,7 @@ import {
   projectId,
   publicAnonKey,
 } from "../utils/supabase/info";
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 
 interface Admision {
   id: string;
@@ -179,8 +179,7 @@ export function GestionAdmisiones({
     setError("");
 
     try {
-      const baseUrl =
-        "https://xtpqhsbosazgpwmiifjt.supabase.co/functions/v1/make-server-89b561df";
+      const baseUrl = import.meta.env.VITE_API_BASE_URL;
       const response = await fetch(`${baseUrl}/admisiones`, {
         method: "GET",
         headers: {

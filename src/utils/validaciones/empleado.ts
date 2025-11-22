@@ -26,6 +26,105 @@ export interface DetailedValidationResult {
   warnings: Record<string, string[]>;
 }
 
+// Interfaz para las validaciones individuales
+export interface ValidationFieldResult {
+  valido: boolean;
+  error: string;
+}
+
+// Validaciones individuales para campos del formulario
+export const validarNombre = (nombre: string): ValidationFieldResult => {
+  if (!nombre || nombre.trim() === '') {
+    return { valido: false, error: 'El nombre es obligatorio' };
+  }
+  if (nombre.length < 2) {
+    return { valido: false, error: 'El nombre debe tener al menos 2 caracteres' };
+  }
+  if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s-]+$/.test(nombre)) {
+    return { valido: false, error: 'El nombre solo puede contener letras y espacios' };
+  }
+  return { valido: true, error: '' };
+};
+
+export const validarApellido = (apellido: string): ValidationFieldResult => {
+  if (!apellido || apellido.trim() === '') {
+    return { valido: false, error: 'El apellido es obligatorio' };
+  }
+  if (apellido.length < 2) {
+    return { valido: false, error: 'El apellido debe tener al menos 2 caracteres' };
+  }
+  if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s-]+$/.test(apellido)) {
+    return { valido: false, error: 'El apellido solo puede contener letras y espacios' };
+  }
+  return { valido: true, error: '' };
+};
+
+/**
+ * Valida un teléfono (versión para validación de campo individual)
+ */
+export const validarTelefono = (telefono: string): ValidationFieldResult => {
+  if (!telefono || telefono.trim() === '') {
+    return { valido: true, error: '' }; // Opcional
+  }
+  
+  // Limpiar caracteres especiales comunes en teléfonos
+  const telefonoLimpio = telefono.replace(/[\s\-()]/g, "");
+  
+  // Verificar que tenga solo números y posiblemente un '+'
+  const telefonoRegex = /^\+?[0-9]+$/;
+  
+  if (!telefonoRegex.test(telefonoLimpio)) {
+    return { valido: false, error: 'El teléfono solo debe contener números, espacios, guiones o paréntesis' };
+  }
+  
+  // Verificar longitud mínima
+  if (telefonoLimpio.replace(/\+/g, "").length < 8) {
+    return { valido: false, error: 'El teléfono debe tener al menos 8 dígitos' };
+  }
+  
+  // Verificar longitud máxima
+  if (telefonoLimpio.length > 20) {
+    return { valido: false, error: 'El teléfono no puede exceder 20 caracteres' };
+  }
+  
+  return { valido: true, error: '' };
+};
+
+/**
+ * Valida un email (versión para validación de campo individual)
+ */
+export const validarEmail = (email: string): ValidationFieldResult => {
+  if (!email || email.trim() === '') {
+    return { valido: true, error: '' }; // Opcional
+  }
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+  if (!emailRegex.test(email)) {
+    return { valido: false, error: 'Formato de correo electrónico inválido' };
+  }
+  
+  if (email.length > 255) {
+    return { valido: false, error: 'El email no puede exceder 255 caracteres' };
+  }
+  
+  return { valido: true, error: '' };
+};
+
+export const validarRol = (rol: string): ValidationFieldResult => {
+  if (!rol) {
+    return { valido: false, error: 'El rol es obligatorio' };
+  }
+  return { valido: true, error: '' };
+};
+
+export const validarEstado = (estado: string): ValidationFieldResult => {
+  if (!estado) {
+    return { valido: false, error: 'El estado es obligatorio' };
+  }
+  return { valido: true, error: '' };
+};
+
 /**
  * Valida un empleado completo
  */
@@ -85,23 +184,23 @@ export function validarFormatos(empleado: Partial<Empleado>): ValidationResult {
   // Validar email
   if (empleado.email && empleado.email.trim() !== "") {
     const emailValidation = validarEmail(empleado.email);
-    if (!emailValidation.valid) {
-      errors.push(...emailValidation.errors);
+    if (!emailValidation.valido) {
+      errors.push(emailValidation.error);
     }
   }
 
   // Validar teléfono principal
   if (empleado.telefono && empleado.telefono.trim() !== "") {
     const telefonoValidation = validarTelefono(empleado.telefono);
-    if (!telefonoValidation.valid) {
-      errors.push(...telefonoValidation.errors);
+    if (!telefonoValidation.valido) {
+      errors.push(telefonoValidation.error);
     }
   }
 
   // Validar teléfono secundario
   if (empleado.telefono_secundario && empleado.telefono_secundario.trim() !== "") {
     const telefonoValidation = validarTelefono(empleado.telefono_secundario);
-    if (!telefonoValidation.valid) {
+    if (!telefonoValidation.valido) {
       errors.push("El teléfono secundario no es válido");
     }
   }
@@ -128,59 +227,7 @@ export function validarFormatos(empleado: Partial<Empleado>): ValidationResult {
   };
 }
 
-/**
- * Valida un email
- */
-export function validarEmail(email: string): ValidationResult {
-  const errors: string[] = [];
-  
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
-  if (!emailRegex.test(email)) {
-    errors.push("El formato del email no es válido");
-  }
-  
-  if (email.length > 255) {
-    errors.push("El email no puede exceder 255 caracteres");
-  }
 
-  return {
-    valid: errors.length === 0,
-    errors
-  };
-}
-
-/**
- * Valida un teléfono
- */
-export function validarTelefono(telefono: string): ValidationResult {
-  const errors: string[] = [];
-  
-  // Limpiar caracteres especiales comunes en teléfonos
-  const telefonoLimpio = telefono.replace(/[\s\-()]/g, "");
-  
-  // Verificar que tenga solo números y posiblemente un '+'
-  const telefonoRegex = /^\+?[0-9]+$/;
-  
-  if (!telefonoRegex.test(telefonoLimpio)) {
-    errors.push("El teléfono solo debe contener números, espacios, guiones o paréntesis");
-  }
-  
-  // Verificar longitud mínima
-  if (telefonoLimpio.replace(/\+/g, "").length < 8) {
-    errors.push("El teléfono debe tener al menos 8 dígitos");
-  }
-  
-  // Verificar longitud máxima
-  if (telefonoLimpio.length > 20) {
-    errors.push("El teléfono no puede exceder 20 caracteres");
-  }
-
-  return {
-    valid: errors.length === 0,
-    errors
-  };
-}
 
 /**
  * Valida un número de documento

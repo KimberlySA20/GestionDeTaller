@@ -142,8 +142,7 @@ export function DetalleVehiculo({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const baseUrl =
-    "https://xtpqhsbosazgpwmiifjt.supabase.co/functions/v1/make-server-89b561df";
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     cargarDatos();

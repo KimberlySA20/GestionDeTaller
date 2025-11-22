@@ -43,8 +43,7 @@ export function Estadisticas({
   const [stats, setStats] = useState<Estadisticas | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const baseUrl =
-    "https://xtpqhsbosazgpwmiifjt.supabase.co/functions/v1/make-server-89b561df";
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     cargarEstadisticas();
